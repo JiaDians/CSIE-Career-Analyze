@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 
 plt.rcParams['font.sans-serif'] = ['Microsoft JhengHei']
 
-test = {'前端工程師': 'https://www.104.com.tw/jobs/search/?keyword=%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB&order=1&jobsource=2018indexpoc&ro=0',
+test = {
+        '前端工程師': 'https://www.104.com.tw/jobs/search/?keyword=%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB&order=1&jobsource=2018indexpoc&ro=0',
         '後端工程師': 'https://www.104.com.tw/jobs/search/?keyword=%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB&order=1&jobsource=2018indexpoc&ro=0',
         '網路工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E7%B6%B2%E8%B7%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
         '韌體設計工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E9%9F%8C%E9%AB%94%E8%A8%AD%E8%A8%88%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
@@ -14,9 +15,10 @@ test = {'前端工程師': 'https://www.104.com.tw/jobs/search/?keyword=%E5%89%8
         '區塊鏈工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E5%8D%80%E5%A1%8A%E9%8F%88%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
         '資料科學家': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E8%B3%87%E6%96%99%E7%A7%91%E5%AD%B8%E5%AE%B6&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
         '資安工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E8%B3%87%E5%AE%89%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
-        '電腦視覺工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E9%9B%BB%E8%85%A6%E8%A6%96%E8%A6%BA%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1'}
+        '電腦視覺工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E9%9B%BB%E8%85%A6%E8%A6%96%E8%A6%BA%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1'
+        }
 
-search_page_count = 100
+max_search_page_count = 100
 education_experience_lists = []
 work_experience_lists = []
 skill_count_lists = []
@@ -27,7 +29,7 @@ median_salary_month_list = []
 
 
 def getData():
-    driver = webdriver.Chrome('./chromedriver')
+    driver = webdriver.Chrome()
     driver.implicitly_wait(3)
     soup = []
     # for i in range(2):
@@ -36,6 +38,7 @@ def getData():
         driver.get(list(test.values())[i])
         
         # 取得 search_page_count
+        search_page_count = -1
         soup_temp = BeautifulSoup(driver.page_source, "html5lib")
         regex = re.compile('\s*b-clear-border\s*page-select\s*js-paging-select\s*gtm-paging-bottom\s*')
         page_number_tag = soup_temp.find("select",{'class': regex})
@@ -44,15 +47,16 @@ def getData():
            # print(m.group(0))
            m2 = re.search('/.+?頁', m.group(0))
            search_page_count = int(m2.group(0)[1:-1].strip())
-           if search_page_count > 100:
-               search_page_count = 100
+           if search_page_count > max_search_page_count:
+               search_page_count = max_search_page_count
                    
         # 開爬
         btn_count = 0
         progress = tqdm(total=search_page_count)
         for j in range(search_page_count):
+            # 下拉
             driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-            soup_temp = BeautifulSoup(driver.page_source, "html5lib")
+            # 點擊按鈕
             regex = re.compile('\s*b-btn\s*b-btn--link\s*js-more-page\s*')
             btn = soup_temp.findAll("button",{'class': regex})
             # print(btn)
@@ -60,9 +64,53 @@ def getData():
                 btn_count += 1
                 btn_list = driver.find_elements_by_xpath("//button[@class='b-btn b-btn--link js-more-page']")
                 btn_list[len(btn_list)-1].click()
+            # 等待
+            time.sleep(0.5)
+            # 接收頁面資訊
+            soup_temp = BeautifulSoup(driver.page_source, "html5lib")
+            
+            if j == 0: # 最初
+                # --- 抓出 標題 及 公司名
+                regex = re.compile('\s*b-block--top-bord\s*job-list-item\s*b-clearfix\s*js-job-item\s*')
+                article_list = soup_temp.findAll("article",{'class': regex})
+                end_article = article_list[len(article_list)-1]
+                Old_data_job_name = end_article.get('data-job-name')
+                Old_data_cust_name = end_article.get('data-cust-name')
+                progress.update(1)
+            else:
+                # --- 抓出 標題 及 公司名
+                regex = re.compile('\s*b-block--top-bord\s*job-list-item\s*b-clearfix\s*js-job-item\s*')
+                article_list = soup_temp.findAll("article",{'class': regex})
+                end_article = article_list[len(article_list)-1]
+                New_data_job_name = end_article.get('data-job-name')
+                New_data_cust_name = end_article.get('data-cust-name')
+            
+            while j > 0 and New_data_job_name == Old_data_job_name and New_data_cust_name == Old_data_cust_name:
+                print()
+                print('沒有換頁成功，等待嘗試')
+                time.sleep(0.5)
+                # 點擊按鈕
+                driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+                soup_temp = BeautifulSoup(driver.page_source, "html5lib")
+                regex = re.compile('\s*b-btn\s*b-btn--link\s*js-more-page\s*')
+                btn = soup_temp.findAll("button",{'class': regex})
+                # print(btn)
+                if len(btn) != btn_count:
+                    btn_count += 1
+                    btn_list = driver.find_elements_by_xpath("//button[@class='b-btn b-btn--link js-more-page']")
+                    btn_list[len(btn_list)-1].click()
+                # --- 抓出 標題 及 公司名
+                regex = re.compile('\s*b-block--top-bord\s*job-list-item\s*b-clearfix\s*js-job-item\s*')
+                article_list = soup_temp.findAll("article",{'class': regex})
+                end_article = article_list[len(article_list)-1]
+                New_data_job_name = end_article.get('data-job-name')
+                New_data_cust_name = end_article.get('data-cust-name')
+            
             progress.update(1)
-            time.sleep(3.5)
-        
+            if j > 0:
+                Old_data_job_name = New_data_job_name
+                Old_data_cust_name = New_data_cust_name
+
         soup.append(BeautifulSoup(driver.page_source, "html5lib"))
         progress.close()
         print()
@@ -162,6 +210,15 @@ def main(soup):
         skill_count_dict = sorted(skill_count_dict.items(), key=lambda x: x[1], reverse = True)  
         skill_count_lists.append(skill_count_dict)
         
+        index = 0
+        skill_count_dict_count_temp = len(skill_count_dict)
+        while index < skill_count_dict_count_temp:
+            if skill_count_dict[index][0] in ['and', 'or', 'code']:
+                skill_count_dict.pop(index)
+                skill_count_dict_count_temp -= 1
+            else:
+                index += 1
+            
         print('Skill: ', end='')
         for skill in skill_count_dict[:20]:
             print(skill[0], end=',')
@@ -221,17 +278,19 @@ def GraphAnalyze(salary_month_lists, salary_year_lists, education_experience_lis
     plt.grid()
     for i in range(len(test_name_list)):
         plt.bar([salary + 5000 for salary in salary_range_list], 
-        	company_count[i],
+        	[x / sum(company_count[i]) * 100 for x in company_count[i]],
         	10000, 
         	edgecolor=(0, 0, 0),
             label = test_name_list[i],
-            alpha = 0.8) 
+            alpha = 0.5) 
     salary_xtick_temp = [salary_xtick // 1000 for salary_xtick in salary_xticks]
     plt.xticks(salary_xticks, salary_xtick_temp, rotation=-90) 
-    plt.xlabel("Monthly salary (k)")
-    plt.ylabel("Number of companies")
-    plt.title('資工「各領域」開出薪資範圍內之公司數對比圖')
+    plt.xlabel("月薪 (k)")
+    plt.ylabel("職缺數 (%)")
+    plt.title('資工「各領域」月薪範圍內之職缺數比例對比圖' + ' [總資料數=' + str(sum([sum(x) for x in company_count])) + ']')
     plt.legend(loc = 'upper right')     
+    plt.xlim(20000,120000)
+    plt.ylim(0,100)
     plt.tight_layout()
     plt.savefig('1.png')
     
@@ -241,36 +300,39 @@ def GraphAnalyze(salary_month_lists, salary_year_lists, education_experience_lis
     plt.grid()
     for i in range(2):
         plt.bar([salary + 5000 for salary in salary_range_list], 
-        	company_count[i],
+        	[x / sum(company_count[i]) * 100 for x in company_count[i]],
         	10000, 
         	edgecolor=(0, 0, 0),
             label = test_name_list[i],
             alpha = 0.4) 
     salary_xtick_temp = [salary_xtick // 1000 for salary_xtick in salary_xticks]
     plt.xticks(salary_xticks, salary_xtick_temp, rotation=-90) 
-    plt.xlabel("Monthly salary (k)")
-    plt.ylabel("Number of companies")
-    plt.title('「' + test_name_list[0] + '」 與 「'+ test_name_list[1] + '」 開出薪資範圍內之公司數對比圖')
+    plt.xlabel("月薪 (k)")
+    plt.ylabel("職缺數 (%)")
+    plt.title('「' + test_name_list[0] + '」 與 「'+ test_name_list[1] + '」 月薪範圍內之職缺數比例對比圖' + ' [總資料數=' + str(sum(company_count[0]) + sum(company_count[1])) + ']')
     plt.legend(loc = 'upper right')     
+    plt.xlim(20000,120000)
     plt.tight_layout()
     plt.savefig('2.png')
     
     # ------------------------------------------------------------
     # sub
-    plt.figure(3, figsize=(10,7))
+    plt.figure(3, figsize=(15,9))
     for i in range(len(test_name_list)):
         plt.subplot(int(str(3)+str(3)+str(i+1))) 
         plt.grid()
         plt.bar([salary + 5000 for salary in salary_range_list], 
-        	company_count[i],
+        	[x / sum(company_count[i]) * 100 for x in company_count[i]],
         	10000, 
         	edgecolor=(0, 0, 0),
             alpha = 0.8) 
         salary_xtick_temp = [salary_xtick // 1000 for salary_xtick in salary_xticks]
         plt.xticks(salary_xticks, salary_xtick_temp, rotation=-90) 
-        plt.xlabel("Monthly salary (k)")
-        plt.ylabel("Number of companies")
-        plt.title(test_name_list[i] + ' (開出月薪範圍內之公司數統計)')
+        plt.xlim(20000,120000)
+        plt.ylim(0,100)
+        plt.xlabel("月薪 (k)")
+        plt.ylabel("職缺數 (%)")
+        plt.title(test_name_list[i] + ' (月薪範圍內之職缺數比例統計)' + ' [總資料數=' + str(sum(company_count[i])) + ']')
     plt.tight_layout()
     plt.savefig('3.png')
     
@@ -294,7 +356,6 @@ def GraphAnalyze(salary_month_lists, salary_year_lists, education_experience_lis
                  fontweight='bold',
                  va= 'center')
     plt.tight_layout()
-    
     plt.savefig('4.png')
     
     
