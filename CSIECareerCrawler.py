@@ -18,7 +18,7 @@ test = {
         '電腦視覺工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E9%9B%BB%E8%85%A6%E8%A6%96%E8%A6%BA%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1'
         }
 
-max_search_page_count = 100
+max_search_page_count = 50
 education_experience_lists = []
 work_experience_lists = []
 skill_count_lists = []
@@ -29,7 +29,7 @@ median_salary_month_list = []
 
 
 def getData():
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome('./chromedriver')
     driver.implicitly_wait(3)
     soup = []
     # for i in range(2):
