@@ -16,9 +16,12 @@ test = {
 }
 ```
 
+---
+
+![img](./3.png)
+
 ### 標題
 九種領域 (前端、後端、網路、韌體、電腦系統分析、區塊鏈、資料科學、資安、電腦視覺) 薪資範圍內之職缺數比例對比圖<br>
-
 ### 說明
 以抓取到的月薪做一個範圍的統計，例如第一張圖的前端工程師，橫軸處月薪40k~50k之間，對到縱軸約30%，意味總資料數959筆中佔了30%的數量在該月薪範圍內。<br>
 
@@ -30,51 +33,48 @@ test = {
 ### 備註
 由於抓取到的月薪資料標準是以(xxx以上、xxx ~ xxx元)，前者數值直接取，後者是相加除二來存，所以數值可以當作起薪或工作五年內可能的月薪範圍。<br>
 
-![img](./3.png)
-
 ---
-
-### 標題
-上圖的九種領域重疊的混合圖
-
-### 說明
-從月薪70k ~ 120k範圍內，可以觀察到由(區塊鏈工程師、電腦視覺工程師、資料科學家)佔據多數，而30k ~ 50k可以看到(網路工程師、韌體工程師)佔多數。
 
 ![img](./1.png)
 
+### 標題
+上圖的九種領域重疊的混合圖
+### 說明
+從月薪70k ~ 120k範圍內，可以觀察到由(區塊鏈工程師、電腦視覺工程師、資料科學家)佔據多數，而30k ~ 50k可以看到(網路工程師、韌體工程師)佔多數。
+
 ---
+
+![img](./2.png)
 
 ### 標題
 「前端工程師」與「後端工程師」的月薪範圍內之職缺數比例重疊對比圖
-
 ### 說明
 可明顯觀察到，月薪在30k ~ 50k，前端遠遠高出後端，而60k~80k則是後端高於前端。<br>
 如果實際計算的話，以60k ~ 70k為例，假設資料各佔900筆，且多出部分佔了3/4格，換算後是33.75個職缺數。
 
 也就是說1855個職缺內，在薪資60k ~ 70k範圍內，後端有比前端多出33.75個職缺。<br>
 
-![img](./2.png)
-
 ---
+
+![img](./4.png)
 
 ### 標題
 九個領域的平均月薪排名
 ### 說明
 從最高的區塊鏈76k到前端54k都有達到五萬以上，而末三名為網路、資安、電腦系統分析。
 
-![img](./4.png)
-
 ---
+
+![img](./5.png)
 
 ### 標題
 九個領域的中位數月薪排名
 ### 說明
 超越五萬的有區塊鏈、電腦視覺、資料科學家、後端、前端，整體排序與平均月薪想比其實變動不大，唯一變動的是，可看到月薪在以中位數來看時皆下降了，也意味職缺中中低薪佔據了大部分，而極少職缺開出的高薪有顯著落差，呈現斷層，導致此現象。
 
-
-![img](./5.png)
-
 ---
+
+![img](./6.png)
 
 ### 標題
 九個領域的學歷要求對比圖
@@ -86,9 +86,9 @@ test = {
 
 其餘部分通常大學畢即可。<br>
 
-![img](./6.png)
-
 ---
+
+![img](./7.png)
 
 ### 標題
 九個領域的工作經歷對比圖
@@ -109,7 +109,34 @@ test = {
 
 其實相差不大，而以後端領域最高來看，似乎較看中是否有過去工作經驗。
 
+---
 
+名次排序 | 前端工程師 | 後端工程師 | 網路工程師 | 韌體設計工程師 | 電腦系統分析師 | 區塊鏈工程師 | 資料科學家 | 資安工程師 | 電腦視覺工程師
+-|-|-|-|-|-|-|-|-|-
+1 | API | API | Linux | C | SQL | API | AI | Linux | C
+2 | CSS | Web | Windows | Linux | Java | js | Python | Windows | AI
+3 | UI | UI | Server | MCU | NFT | C | Data | Server | D 
+4 | Vue | PHP | Switch | Android | NET | Blockchain | Machine | IT | Python
+5 | Web | UX | IT | Embedded | SAP | App | Learning | AD | AlfredCamera
+6 | HTML | Git | Firewall | development | ERP | Git | C | Switch | API
+7 | UX | js | Cisco | BIOS | Web | JavaScript | ETL | Firewall | learning
+8 | JavaScript | Java | AD | IC | API | React | BI | IPS | Deep
+9 | js | C | IP | ARM | Oracle | AI | data | Cisco | IOS
+10 | React | CSS | Router | FPGA | ASP | Vue | SQL | IP | Computer
+11 | HTML5 | SQL | ERP | driver | Linux | blockchain | D | ERP | AR
+12 | RWD | MySQL | AWS | G | MVC | Web | learning | Router | Vision
+13 | Javascript | JavaScript | VPN | system | SA | Solidity | API | C | Android
+14 | Git | Vue | TCP | firmware | BI | Node | NLP | WAF | Linux
+15 | CSS3 | HTML | NAS | AI | Python | Python | Big | Security | VR
+16 | C | PM | DNS | Windows | Spring | DeFi | TenMax | AWS | Learning
+17 | PM | RESTful | GCP | Driver | Net | C | Deep | TCP | Edge
+18 | Angular | APP | MIS | USB | MS | Golang | ML | DNS | vision
+19 | Java | Python | PC | FW | JavaScript | iOS | pipeline | SIEM | deep
+20 | APP | Javascript | VMware | I2C | AI | Android | UI | VMware | js
 
+### 標題
+在該領域工作內容時常強調的字串排名
+### 說明
+由於在資訊領域，以英文與數字組成的字串，常被視為技能、軟體的專有名詞，所以利用這樣的規則，去統計該領域所有工作內容資料的抓取，做一個數量上的排名。<br>
 
-![img](./7.png)
+缺點部分缺乏中文專有名詞的收集，未來專案更新會加強這部分處理，以目前分析做一個英文資訊的基本參考。
