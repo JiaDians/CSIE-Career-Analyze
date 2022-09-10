@@ -1,18 +1,18 @@
 # 資訊工程 職涯領域分析 
-## 本專案於104人力銀行進行爬蟲處理，將所取得資訊(月薪、年薪、工作經歷、學歷要求、所需具備技能)做一個分析並將各領域相互比對
+本專案於104人力銀行進行爬蟲處理，將所取得資訊(月薪、年薪、工作經歷、學歷要求、所需具備技能)做一個分析並將各領域相互比對<br><br>
 如需查找某個領域相關的資訊，可以自行運行程式，修改原始碼下方test部分，將最前面一項或兩項更改為您要的查找名稱及爬的網址。
 
 ```python
 test = {
-    '前端工程師': 'https://www.104.com.tw/jobs/search/?keyword=%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB&order=1&jobsource=2018indexpoc&ro=0',
-    '後端工程師': 'https://www.104.com.tw/jobs/search/?keyword=%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB&order=1&jobsource=2018indexpoc&ro=0',
-    '網路工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E7%B6%B2%E8%B7%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
-    '韌體設計工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E9%9F%8C%E9%AB%94%E8%A8%AD%E8%A8%88%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
-    '電腦系統分析師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E9%9B%BB%E8%85%A6%E7%B3%BB%E7%B5%B1%E5%88%86%E6%9E%90%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
-    '區塊鏈工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E5%8D%80%E5%A1%8A%E9%8F%88%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
-    '資料科學家': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E8%B3%87%E6%96%99%E7%A7%91%E5%AD%B8%E5%AE%B6&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
-    '資安工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E8%B3%87%E5%AE%89%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
-    '電腦視覺工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E9%9B%BB%E8%85%A6%E8%A6%96%E8%A6%BA%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1'
+'前端工程師': 'https://www.104.com.tw/jobs/search/?keyword=%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB&order=1&jobsource=2018indexpoc&ro=0',
+'後端工程師': 'https://www.104.com.tw/jobs/search/?keyword=%E5%BE%8C%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB&order=1&jobsource=2018indexpoc&ro=0',
+'網路工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E7%B6%B2%E8%B7%AF%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
+'韌體設計工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E9%9F%8C%E9%AB%94%E8%A8%AD%E8%A8%88%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
+'電腦系統分析師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E9%9B%BB%E8%85%A6%E7%B3%BB%E7%B5%B1%E5%88%86%E6%9E%90%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
+'區塊鏈工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E5%8D%80%E5%A1%8A%E9%8F%88%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
+'資料科學家': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E8%B3%87%E6%96%99%E7%A7%91%E5%AD%B8%E5%AE%B6&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
+'資安工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E8%B3%87%E5%AE%89%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1',
+'電腦視覺工程師': 'https://www.104.com.tw/jobs/search/?ro=0&keyword=%E9%9B%BB%E8%85%A6%E8%A6%96%E8%A6%BA%E5%B7%A5%E7%A8%8B%E5%B8%AB&expansionType=area%2Cspec%2Ccom%2Cjob%2Cwf%2Cwktm&order=1&asc=0&page=1&mode=s&jobsource=2018indexpoc&langFlag=0&langStatus=0&recommendJob=1&hotJob=1'
 }
 ```
 
